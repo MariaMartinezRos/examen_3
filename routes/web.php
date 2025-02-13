@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PageAdminDashboardController;
 use App\Http\Controllers\PageCourseDetailsController;
 use App\Http\Controllers\PageDashboardController;
 use App\Http\Controllers\PageHomeController;
@@ -28,6 +29,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', PageDashboardController::class)->name('pages.dashboard');
+    Route::get('/admin-dashboard', PageAdminDashboardController::class)->name('pages.admin-dashboard');
     Route::get('videos/{course:slug}/{video:slug?}', PageVideosController::class)
         ->name('pages.course-videos');
 });
