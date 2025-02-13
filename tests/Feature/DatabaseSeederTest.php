@@ -3,6 +3,8 @@
 use App\Models\Course;
 use App\Models\User;
 use App\Models\Video;
+use Illuminate\Support\Facades\App;
+use Spatie\Permission\Models\Role;
 
 it('adds given courses', function () {
     // Assert
@@ -75,7 +77,7 @@ it('adds local test user', function () {
     $this->artisan('db:seed');
 
     // Assert
-    $this->assertDatabaseCount(User::class, 1);
+    $this->assertDatabaseCount(User::class, 2);
 });
 
 it('does not test user for production', function () {
@@ -91,3 +93,21 @@ it('does not test user for production', function () {
     // Assert
     $this->assertDatabaseCount(User::class, 0);
 });
+
+it('adds given role', function () {
+    // Arrange
+    App::partialMock()->shouldReceive('environment')->andReturn('local');
+
+    // Assert
+    $this->assertDatabaseCount(Role::class, 0);
+
+    // Act
+    $this->artisan('db:seed');
+
+    // Assert
+    $this->assertDatabaseHas(Role::class, ['name' => 'admin']);
+    $this->assertDatabaseHas(Role::class, ['name' => 'client']);
+
+});
+
+
