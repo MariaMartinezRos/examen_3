@@ -36,7 +36,7 @@ class AdminVideoController extends Controller
         $this->checkAuth();
 
         $courses = Course::all();
-        return view('admin.videos.create', compact('courses'));
+        return view('pages.admin.videos.create', compact('courses'));
     }
 
     /**
@@ -59,16 +59,8 @@ class AdminVideoController extends Controller
             'url' => $request->url
         ]);
 
-        return redirect()->route('admin.videos.index')->with('success', 'Vídeo creado correctamente.');
+        return redirect()->route('pages.admin.videos.index')->with('success', 'Vídeo creado correctamente.');
     }
-
-//    /**
-//     * Display the specified resource.
-//     */
-//    public function show(string $id)
-//    {
-//        //
-//    }
 
     /**
      * Show the form for editing the specified resource.
@@ -78,7 +70,7 @@ class AdminVideoController extends Controller
         $this->checkAuth();
 
         $courses = Course::all();
-        return view('pages.admin.videos.edit', compact('video', 'courses'));
+        return view('pages.admin.videos.create', compact('video', 'courses'));
     }
 
     /**
@@ -101,7 +93,7 @@ class AdminVideoController extends Controller
             'url' => $request->url
         ]);
 
-        return redirect()->route('admin.videos.index')->with('success', 'Vídeo actualizado correctamente.');
+        return redirect()->route('pages.admin.videos.index')->with('success', 'Vídeo actualizado correctamente.');
     }
 
     /**
@@ -112,6 +104,6 @@ class AdminVideoController extends Controller
         $this->checkAuth();
 
         $video->delete();
-        return redirect()->route('admin.videos.index')->with('success', 'Vídeo eliminado.');
+        return redirect()->route('pages.admin.videos.index')->with('success', 'Vídeo eliminado.');
     }
 }

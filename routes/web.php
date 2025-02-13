@@ -42,10 +42,8 @@ Route::middleware([
 //            Route::get('/admin-dashboard', [PageAdminDashboardController::class, '__invoke'])->name('pages.admin-dashboard');
 //            Route::resource('admin/videos', AdminVideoController::class);
 //        });
-    Route::middleware(['role:admin'])->group(function () {
-        Route::get('/admin-dashboard', [PageAdminDashboardController::class, '__invoke'])->name('pages.admin-dashboard');
-        Route::resource('admin/videos', AdminVideoController::class)->names('admin.videos');
-    });
+        Route::get('/admin-dashboard', PageAdminDashboardController::class)->name('pages.admin-dashboard');
+        Route::resource('/admin/videos', AdminVideoController::class)->names('admin.videos');
 });
 
 Route::webhooks('webhooks');

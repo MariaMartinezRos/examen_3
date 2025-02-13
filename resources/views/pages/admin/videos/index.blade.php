@@ -20,7 +20,7 @@
                                     <a href="#" class="hover:text-yellow-400">Create Course</a>
                                 </li>
                                 <li class="py-2">
-                                    <a href="#" class="hover:text-yellow-400">Create Video</a>
+                                    <a href="{{ route('admin.videos.index') }}" class="hover:text-yellow-400">Create Video</a>
                                 </li>
                             </ul>
                         </div>
@@ -29,15 +29,38 @@
             </div>
         </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @foreach($videos as $video)
-                        <div class="bg-indigo-500 text-white p-4 rounded-lg">
-                            <h3 class="text-2xl font-bold">{{ $video->title }}</h3>
-                            <p class="text-xl">{{ $video->url }}</p>
-                        </div>
-                    @endforeach
-                </div>
+                <h1 class="text-2xl font-bold mb-4">Videos</h1>
+                <a href="{{ route('admin.videos.create') }}" class="px-4 py-2 bg-blue-500 text-white rounded">New Video</a>
 
+                <table class="mt-4 w-full bg-white shadow rounded-lg">
+                    <thead>
+                    <tr>
+                        <th class="p-2">Tittle</th>
+                        <th class="p-2">Course</th>
+                        <th class="p-2">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($videos as $video)
+                        <tr>
+                            <td class="p-2">{{ $video->title }}</td>
+                            <td class="p-2">{{ $video->course->title }}</td>
+                            <td class="p-2">
+                                <a href="{{ route('admin.videos.edit', $video) }}" class="text-blue-500">Edit</a>
+                                <form action="{{ route('admin.videos.destroy', $video) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-500">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+
+                <div class="mt-4">
+                    {{ $videos->links() }}
+                </div>
 
             </div>
         </div>
