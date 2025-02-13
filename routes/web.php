@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminVideoController;
 use App\Http\Controllers\PageAdminDashboardController;
 use App\Http\Controllers\PageCourseDetailsController;
 use App\Http\Controllers\PageDashboardController;
@@ -29,9 +30,22 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', PageDashboardController::class)->name('pages.dashboard');
-    Route::get('/admin-dashboard', PageAdminDashboardController::class)->name('pages.admin-dashboard');
     Route::get('videos/{course:slug}/{video:slug?}', PageVideosController::class)
         ->name('pages.course-videos');
+
+    //////ADMIN
+//    Route::get('/admin-dashboard', PageAdminDashboardController::class)->name('pages.admin-dashboard');
+//    Route::resource('admin/videos', AdminVideoController::class);
+
+//    Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
+//        ->group(function () {
+//            Route::get('/admin-dashboard', [PageAdminDashboardController::class, '__invoke'])->name('pages.admin-dashboard');
+//            Route::resource('admin/videos', AdminVideoController::class);
+//        });
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/admin-dashboard', [PageAdminDashboardController::class, '__invoke'])->name('pages.admin-dashboard');
+        Route::resource('admin/videos', AdminVideoController::class)->names('admin.videos');
+    });
 });
 
 Route::webhooks('webhooks');
